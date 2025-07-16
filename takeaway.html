@@ -842,6 +842,20 @@
 
                 <div class="menu-item">
                   <div class="item-info">
+                    <div class="item-name">Ostres Franceses (1 unitat) </div>
+                    <div class="item-description">Ostres Franceses amb salsa ponzu i perles de tòfona.</div>
+                  </div>
+                  <div class="item-actions">
+                    <div class="item-price">5,50 €</div>
+                    <button class="add-to-cart" data-name="Ostres Franceses "
+                      data-price="5.50">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="menu-item">
+                  <div class="item-info">
                     <div class="item-name">Edamame picant</div>
                     <div class="item-description">Vaines de soja verdes amb
                       salsa picant</div>
@@ -880,13 +894,13 @@
               <div class="menu-items">
                 <div class="menu-item">
                   <div class="item-info">
-                    <div class="item-name">Yakisoba de vedella</div>
+                    <div class="item-name">Yakisoba de presa</div>
                     <div class="item-description">Amb barreja de verdures i daus
-                      de vedella</div>
+                      de presa</div>
                   </div>
                   <div class="item-actions">
                     <div class="item-price">11,90 €</div>
-                    <button class="add-to-cart" data-name="Yakisoba de vedella"
+                    <button class="add-to-cart" data-name="Yakisoba de presa"
                       data-price="11.90">
                       <i class="fas fa-plus"></i>
                     </button>
@@ -951,7 +965,7 @@
                   <div class="item-info">
                     <div class="item-name">Yakimeshi de pollastre cruixent
                     </div>
-                    <div class="item-description">Pollastre empanat amb panko,
+                    <div class="item-description">Pollastre arrebossat amb panko,
                       barreja de
                       verdures i bolets.</div>
                   </div>
@@ -983,14 +997,14 @@
 
                 <div class="menu-item">
                   <div class="item-info">
-                    <div class="item-name">Yakimeshi de vedella </div>
+                    <div class="item-name">Yakimeshi de presa </div>
                     <div class="item-description">Amb barreja de verdures i daus
-                      de vedella.</div>
+                      de presa.</div>
                   </div>
                   <div class="item-actions">
-                    <div class="item-price">11,90 €</div>
-                    <button class="add-to-cart" data-name="Yakimeshi de vedella"
-                      data-price="11.90">
+                    <div class="item-price">11,50 €</div>
+                    <button class="add-to-cart" data-name="Yakimeshi de presa"
+                      data-price="11.50">
                       <i class="fas fa-plus"></i>
                     </button>
                   </div>
@@ -1110,7 +1124,7 @@
                     <div class="menu-item">
                       <div class="item-info">
                         <div class="item-name">Bao de pollastre</div>
-                        <div class="item-description">Pollastre empanat amb
+                        <div class="item-description">Pollastre rebozat en
                           panko,
                           ceba confitada i maionesa japonesa.</div>
                       </div>
@@ -1950,7 +1964,43 @@
     }
 
     // Función para deshabilitar el sistema de pedidos - MEJORADA
-   
+    function disableOrderSystem(reason) {
+        // 1. Mostrar mensaje de cerrado
+        const closedMessage = document.getElementById('closedMessage');
+        if (closedMessage) {
+            closedMessage.style.display = 'block';
+            document.getElementById('closedMessageTitle').textContent = reason.title;
+            document.getElementById('closedMessageText').textContent = reason.message;
+        }
+        
+        // 2. Mostrar overlay de cerrado
+        const overlay = document.getElementById('closedOverlay');
+        if (overlay) {
+            overlay.style.display = 'flex';
+            document.getElementById('overlayTitle').textContent = reason.title;
+            document.getElementById('overlayText').textContent = reason.message;
+        }
+        
+        // 3. Deshabilitar todos los botones de añadir al carrito
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.disabled = true;
+            button.classList.add('disabled');
+        });
+        
+        // 4. Deshabilitar botón de enviar pedido
+        const submitBtn = document.getElementById('submitOrder');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.classList.add('disabled');
+        }
+        
+        // 5. Deshabilitar secciones del menú
+        document.querySelectorAll('.section-title').forEach(title => {
+            title.style.pointerEvents = 'none';
+            title.style.cursor = 'default';
+            title.classList.add('disabled');
+        });
+    }
 
         // Manejar el envío del formulario a Formspree
         document.getElementById('orderForm').addEventListener('submit', function (e) {
